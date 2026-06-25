@@ -1,0 +1,48 @@
+### Get Customers
+GET http://localhost:8080/api/customers
+Authorization: Basic admin admin123
+
+###
+
+### Create Customer
+POST http://localhost:8080/api/customers
+Authorization: Basic admin admin123
+Content-Type: application/json
+
+{
+  "firstName": "Lalitha",
+  "lastName": "Aluri",
+  "email": "lalitha@gmail.com",
+  "phone": "0225298724"
+}
+### Get Loans
+GET http://localhost:8080/api/loans
+Authorization: Basic admin admin123
+###
+
+### Create Loan
+POST http://localhost:8080/api/loans
+Authorization: Basic admin admin123
+Content-Type: application/json
+
+{
+  "loanType": "Home Loan",
+  "amount": 500000,
+  "status": "PENDING",
+  "customerId": 1
+}
+###
+
+### Get Loans By Customer
+GET http://localhost:8080/api/loans/customer/1
+Authorization: Basic admin admin123
+###
+
+### Approve Loan
+PUT http://localhost:8080/api/loans/2/approve
+Authorization: Basic admin admin123
+###
+
+### Reject Loan
+PUT http://localhost:8080/api/loans/2/reject
+Authorization: Basic admin admin123
