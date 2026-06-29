@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import type { Customer } from "../types/Customer";
-import type { Loan } from "../types/Loan";
-import { getCustomers } from "../services/customerService";
-import { getLoans } from "../services/loanService";
+import type { Customer } from "../../types/Customer.ts";
+import type { Loan } from "../../types/Loan.ts";
+import { getCustomers } from "../../services/customerService.ts";
+import { getLoans } from "../../services/loanService.ts";
 
 function Dashboard() {
     const [customers, setCustomers] = useState<Customer[]>([]);

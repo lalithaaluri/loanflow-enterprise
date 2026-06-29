@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/loans")
+@CrossOrigin(origins = "http://localhost:5173")
 public class LoanApplicationController {
 
     private final LoanApplicationService loanApplicationService;
@@ -31,6 +32,20 @@ public class LoanApplicationController {
     public LoanApplication createLoanApplication(@RequestBody LoanRequest request) {
         return loanApplicationService.createLoanApplication(request);
     }
+
+    @PutMapping("/{loanId}")
+    public LoanApplication updateLoan(
+            @PathVariable Long loanId,
+            @RequestBody LoanRequest request) {
+
+        return loanApplicationService.updateLoan(loanId, request);
+    }
+
+    @DeleteMapping("/{loanId}")
+    public void deleteLoan(@PathVariable Long loanId) {
+        loanApplicationService.deleteLoan(loanId);
+    }
+
     @PutMapping("/{loanId}/approve")
     public LoanApplication approveLoan(@PathVariable Long loanId) {
         return loanApplicationService.approveLoan(loanId);
@@ -39,4 +54,5 @@ public class LoanApplicationController {
     @PutMapping("/{loanId}/reject")
     public LoanApplication rejectLoan(@PathVariable Long loanId) {
         return loanApplicationService.rejectLoan(loanId);
-    }}
+    }
+}
