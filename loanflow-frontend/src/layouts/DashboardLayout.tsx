@@ -1,6 +1,14 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { logout, getRole } from "../services/authService";
 
 function DashboardLayout() {
+    const navigate = useNavigate();
+
+    function handleLogout() {
+        logout();
+        navigate("/login");
+    }
+
     return (
         <div className="app-shell">
             <aside className="sidebar">
@@ -16,7 +24,20 @@ function DashboardLayout() {
             <main className="main-content">
                 <header className="topbar">
                     <h1>LoanFlow Dashboard</h1>
-                    <span>Admin</span>
+
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "16px",
+                        }}
+                    >
+                        <span>{getRole()}</span>
+
+                        <button onClick={handleLogout}>
+                            Logout
+                        </button>
+                    </div>
                 </header>
 
                 <Outlet />

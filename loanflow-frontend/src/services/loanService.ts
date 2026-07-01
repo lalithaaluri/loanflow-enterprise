@@ -1,14 +1,24 @@
 import type { Loan } from "../types/Loan";
+import { getToken } from "./authService";
 
 const API_URL = "http://localhost:8080/api/loans";
-const authHeader = "Basic " + btoa("admin:admin123");
+
+function getAuthHeaders() {
+    const token = getToken();
+
+    return {
+        Authorization: `Bearer ${token}`,
+    };
+}
 
 export async function getLoans(): Promise<Loan[]> {
     const response = await fetch(API_URL, {
-        headers: {
-            Authorization: authHeader,
-        },
+        headers: getAuthHeaders(),
     });
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch loans");
+    }
 
     const data = await response.json();
     return Array.isArray(data) ? data : data.content || [];
@@ -26,7 +36,7 @@ export async function createLoan(loan: {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: authHeader,
+            ...getAuthHeaders(),
         },
         body: JSON.stringify(loan),
     });
@@ -37,6 +47,7 @@ export async function createLoan(loan: {
 
     return await response.json();
 }
+
 export async function updateLoan(
     loanId: number,
     loan: {
@@ -52,7 +63,7 @@ export async function updateLoan(
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
-            Authorization: authHeader,
+            ...getAuthHeaders(),
         },
         body: JSON.stringify(loan),
     });
@@ -67,21 +78,18 @@ export async function updateLoan(
 export async function deleteLoan(loanId: number) {
     const response = await fetch(`${API_URL}/${loanId}`, {
         method: "DELETE",
-        headers: {
-            Authorization: authHeader,
-        },
+        headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
         throw new Error("Failed to delete loan");
     }
 }
+
 export async function approveLoan(loanId: number) {
     const response = await fetch(`${API_URL}/${loanId}/approve`, {
         method: "PUT",
-        headers: {
-            Authorization: authHeader,
-        },
+        headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
@@ -94,9 +102,7 @@ export async function approveLoan(loanId: number) {
 export async function rejectLoan(loanId: number) {
     const response = await fetch(`${API_URL}/${loanId}/reject`, {
         method: "PUT",
-        headers: {
-            Authorization: authHeader,
-        },
+        headers: getAuthHeaders(),
     });
 
     if (!response.ok) {

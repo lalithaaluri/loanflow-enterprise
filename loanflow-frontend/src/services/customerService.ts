@@ -1,14 +1,24 @@
 import type { Customer } from "../types/Customer";
+import { getToken } from "./authService";
 
 const API_URL = "http://localhost:8080/api/customers";
-const authHeader = "Basic " + btoa("admin:admin123");
+
+function getAuthHeaders() {
+    const token = getToken();
+
+    return {
+        Authorization: `Bearer ${token}`,
+    };
+}
 
 export async function getCustomers(): Promise<Customer[]> {
     const response = await fetch(API_URL, {
-        headers: {
-            Authorization: authHeader,
-        },
+        headers: getAuthHeaders(),
     });
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch customers");
+    }
 
     const data = await response.json();
     return Array.isArray(data) ? data : data.content || [];
@@ -19,7 +29,7 @@ export async function createCustomer(customer: Omit<Customer, "id">) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: authHeader,
+            ...getAuthHeaders(),
         },
         body: JSON.stringify(customer),
     });
@@ -36,7 +46,7 @@ export async function updateCustomer(customer: Customer) {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
-            Authorization: authHeader,
+            ...getAuthHeaders(),
         },
         body: JSON.stringify(customer),
     });
@@ -51,9 +61,7 @@ export async function updateCustomer(customer: Customer) {
 export async function deleteCustomer(id: number) {
     const response = await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
-        headers: {
-            Authorization: authHeader,
-        },
+        headers: getAuthHeaders(),
     });
 
     if (!response.ok) {

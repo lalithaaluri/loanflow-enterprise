@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Loan } from "../../types/Loan";
+import { getRole } from "../../services/authService";
 import {
     approveLoan,
     deleteLoan,
@@ -11,6 +12,14 @@ import {
 function Loans() {
     const navigate = useNavigate();
     const [loans, setLoans] = useState<Loan[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [statusFilter, setStatusFilter] = useState("ALL");
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const itemsPerPage = 5;
+
+    const role = getRole();
+    const isAdmin = role === "ADMIN";
 
     const loadLoans = async () => {
         try {
@@ -25,6 +34,33 @@ function Loans() {
         loadLoans();
     }, []);
 
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm, statusFilter]);
+
+    const filteredLoans = loans.filter((loan) => {
+        const search = searchTerm.toLowerCase();
+
+        const customerName = loan.customer
+            ? `${loan.customer.firstName} ${loan.customer.lastName}`.toLowerCase()
+            : "";
+
+        const loanStatus = (loan.status || "PENDING").toUpperCase();
+
+        return (
+            (loan.loanType.toLowerCase().includes(search) ||
+                customerName.includes(search)) &&
+            (statusFilter === "ALL" || loanStatus === statusFilter)
+        );
+    });
+
+    const totalPages = Math.ceil(filteredLoans.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedLoans = filteredLoans.slice(
+        startIndex,
+        startIndex + itemsPerPage
+    );
+
     const getStatusClass = (status?: string) => {
         switch (status) {
             case "APPROVED":
@@ -37,10 +73,7 @@ function Loans() {
     };
 
     const handleDelete = async (loanId: number) => {
-        if (!window.confirm("Are you sure you want to delete this loan?")) {
-            return;
-        }
-
+        if (!window.confirm("Are you sure you want to delete this loan?")) return;
         await deleteLoan(loanId);
         await loadLoans();
     };
@@ -65,6 +98,27 @@ function Loans() {
                 </button>
             </div>
 
+            <input
+                type="text"
+                placeholder="Search loans by type or customer name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{
+                    width: "100%",
+                    padding: "10px",
+                    marginBottom: "16px",
+                    borderRadius: "8px",
+                    border: "1px solid #ddd",
+                }}
+            />
+
+            <div style={{ marginBottom: "16px", display: "flex", gap: "8px" }}>
+                <button onClick={() => setStatusFilter("ALL")}>All</button>
+                <button onClick={() => setStatusFilter("PENDING")}>Pending</button>
+                <button onClick={() => setStatusFilter("APPROVED")}>Approved</button>
+                <button onClick={() => setStatusFilter("REJECTED")}>Rejected</button>
+            </div>
+
             <table>
                 <thead>
                 <tr>
@@ -78,7 +132,7 @@ function Loans() {
                 </thead>
 
                 <tbody>
-                {loans.map((loan) => (
+                {paginatedLoans.map((loan) => (
                     <tr key={loan.id}>
                         <td>{loan.id}</td>
                         <td>{loan.loanType}</td>
@@ -89,9 +143,9 @@ function Loans() {
                         </td>
                         <td>${loan.amount.toLocaleString()}</td>
                         <td>
-                            <span className={`status ${getStatusClass(loan.status)}`}>
-                                {loan.status || "PENDING"}
-                            </span>
+                                <span className={`status ${getStatusClass(loan.status)}`}>
+                                    {loan.status || "PENDING"}
+                                </span>
                         </td>
                         <td>
                             <button
@@ -101,35 +155,65 @@ function Loans() {
                                 Edit
                             </button>
 
-                            {(loan.status || "PENDING").trim().toUpperCase() === "PENDING" && (
-                                <>
-                                    <button
-                                        className="approve-btn"
-                                        onClick={() => handleApprove(loan.id)}
-                                    >
-                                        Approve
-                                    </button>
+                            {isAdmin &&
+                                (loan.status || "PENDING").trim().toUpperCase() ===
+                                "PENDING" && (
+                                    <>
+                                        <button
+                                            className="approve-btn"
+                                            onClick={() => handleApprove(loan.id)}
+                                        >
+                                            Approve
+                                        </button>
 
-                                    <button
-                                        className="reject-btn"
-                                        onClick={() => handleReject(loan.id)}
-                                    >
-                                        Reject
-                                    </button>
-                                </>
+                                        <button
+                                            className="reject-btn"
+                                            onClick={() => handleReject(loan.id)}
+                                        >
+                                            Reject
+                                        </button>
+                                    </>
+                                )}
+
+                            {isAdmin && (
+                                <button
+                                    className="delete-btn"
+                                    onClick={() => handleDelete(loan.id)}
+                                >
+                                    Delete
+                                </button>
                             )}
-
-                            <button
-                                className="delete-btn"
-                                onClick={() => handleDelete(loan.id)}
-                            >
-                                Delete
-                            </button>
                         </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
+
+            {filteredLoans.length === 0 && (
+                <p style={{ marginTop: "16px" }}>No loans found.</p>
+            )}
+
+            {filteredLoans.length > 0 && (
+                <div style={{ marginTop: "16px", display: "flex", gap: "8px" }}>
+                    <button
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                    >
+                        Previous
+                    </button>
+
+                    <span>
+                        Page {currentPage} of {totalPages}
+                    </span>
+
+                    <button
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                    >
+                        Next
+                    </button>
+                </div>
+            )}
         </div>
     );
 }
