@@ -3,6 +3,8 @@ import type { Customer } from "../../types/Customer.ts";
 import type { Loan } from "../../types/Loan.ts";
 import { getCustomers } from "../../services/customerService.ts";
 import { getLoans } from "../../services/loanService.ts";
+import LoanStatusChart from "../../components/LoanStatusChart";
+import RecentLoans from "../../components/RecentLoans";
 
 function Dashboard() {
     const [customers, setCustomers] = useState<Customer[]>([]);
@@ -32,30 +34,49 @@ function Dashboard() {
         (loan) => loan.status === "REJECTED"
     ).length;
 
+    const pendingLoans = loans.filter(
+        (loan) => loan.status === "PENDING"
+    ).length;
+
     return (
         <div>
-            <h2>Dashboard</h2>
+            <h2>Dashboard Overview</h2>
 
             <div className="cards">
                 <div className="card">
-                    <h3>Total Customers</h3>
+                    <h3>👥 Customers</h3>
                     <p>{customers.length}</p>
                 </div>
 
                 <div className="card">
-                    <h3>Total Loans</h3>
+                    <h3>💰 Loans</h3>
                     <p>{loans.length}</p>
                 </div>
 
                 <div className="card">
-                    <h3>Approved Loans</h3>
+                    <h3>⏳ Pending </h3>
+                    <p>{pendingLoans}</p>
+                </div>
+
+                <div className="card">
+                    <h3>✅ Approved </h3>
                     <p>{approvedLoans}</p>
                 </div>
 
                 <div className="card">
-                    <h3>Rejected Loans</h3>
+                    <h3>❌ Rejected </h3>
                     <p>{rejectedLoans}</p>
                 </div>
+            </div>
+
+            <div className="dashboard-grid">
+                <LoanStatusChart
+                    approved={approvedLoans}
+                    pending={pendingLoans}
+                    rejected={rejectedLoans}
+                />
+
+                <RecentLoans loans={loans} />
             </div>
         </div>
     );

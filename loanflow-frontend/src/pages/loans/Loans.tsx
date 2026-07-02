@@ -112,12 +112,33 @@ function Loans() {
                 }}
             />
 
-            <div style={{ marginBottom: "16px", display: "flex", gap: "8px" }}>
-                <button onClick={() => setStatusFilter("ALL")}>All</button>
-                <button onClick={() => setStatusFilter("PENDING")}>Pending</button>
-                <button onClick={() => setStatusFilter("APPROVED")}>Approved</button>
-                <button onClick={() => setStatusFilter("REJECTED")}>Rejected</button>
-            </div>
+            <button
+                className={statusFilter === "ALL" ? "filter-btn active-filter" : "filter-btn"}
+                onClick={() => setStatusFilter("ALL")}
+            >
+                📋 All
+            </button>
+
+            <button
+                className={statusFilter === "PENDING" ? "filter-btn active-filter" : "filter-btn"}
+                onClick={() => setStatusFilter("PENDING")}
+            >
+                ⏳ Pending
+            </button>
+
+            <button
+                className={statusFilter === "APPROVED" ? "filter-btn active-filter" : "filter-btn"}
+                onClick={() => setStatusFilter("APPROVED")}
+            >
+                ✅ Approved
+            </button>
+
+            <button
+                className={statusFilter === "REJECTED" ? "filter-btn active-filter" : "filter-btn"}
+                onClick={() => setStatusFilter("REJECTED")}
+            >
+                ❌ Rejected
+            </button>
 
             <table>
                 <thead>
@@ -189,28 +210,24 @@ function Loans() {
                 </tbody>
             </table>
 
-            {filteredLoans.length === 0 && (
-                <p style={{ marginTop: "16px" }}>No loans found.</p>
-            )}
-
             {filteredLoans.length > 0 && (
-                <div style={{ marginTop: "16px", display: "flex", gap: "8px" }}>
+                <div className="pagination">
                     <button
                         disabled={currentPage === 1}
                         onClick={() => setCurrentPage(currentPage - 1)}
                     >
-                        Previous
+                        ◀ Previous
                     </button>
 
                     <span>
-                        Page {currentPage} of {totalPages}
-                    </span>
+            Page {currentPage} of {totalPages}
+        </span>
 
                     <button
                         disabled={currentPage === totalPages}
                         onClick={() => setCurrentPage(currentPage + 1)}
                     >
-                        Next
+                        Next ▶
                     </button>
                 </div>
             )}

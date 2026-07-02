@@ -206,12 +206,12 @@ function Customers() {
             )}
 
             {filteredCustomers.length > 0 && (
-                <div style={{ marginTop: "16px", display: "flex", gap: "8px", alignItems: "center" }}>
+                <div className="pagination">
                     <button
                         disabled={currentPage === 1}
                         onClick={() => setCurrentPage(currentPage - 1)}
                     >
-                        Previous
+                        ◀ Previous
                     </button>
 
                     <span>
@@ -222,7 +222,7 @@ function Customers() {
                         disabled={currentPage === totalPages}
                         onClick={() => setCurrentPage(currentPage + 1)}
                     >
-                        Next
+                        Next ▶
                     </button>
                 </div>
             )}
