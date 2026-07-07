@@ -1,11 +1,6 @@
-import { useEffect, useState } from "react";
-import type { Customer } from "../../types/Customer.ts";
-import {
-    getCustomers,
-    createCustomer,
-    deleteCustomer,
-    updateCustomer,
-} from "../../services/customerService.ts";
+import {useEffect, useState} from "react";
+import type {Customer} from "../../types/Customer.ts";
+import {createCustomer, deleteCustomer, getCustomers, updateCustomer,} from "../../services/customerService.ts";
 
 function Customers() {
     const [customers, setCustomers] = useState<Customer[]>([]);

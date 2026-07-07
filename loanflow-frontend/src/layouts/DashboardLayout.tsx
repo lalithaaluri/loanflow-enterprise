@@ -1,5 +1,5 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { logout, getRole } from "../services/authService";
+import {NavLink, Outlet, useNavigate} from "react-router-dom";
+import {getRole, logout} from "../services/authService";
 
 function DashboardLayout() {
     const navigate = useNavigate();

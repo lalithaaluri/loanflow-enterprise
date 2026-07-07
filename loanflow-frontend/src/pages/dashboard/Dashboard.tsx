@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import type { Customer } from "../../types/Customer.ts";
-import type { Loan } from "../../types/Loan.ts";
-import { getCustomers } from "../../services/customerService.ts";
-import { getLoans } from "../../services/loanService.ts";
+import {useEffect, useState} from "react";
+import type {Customer} from "../../types/Customer.ts";
+import type {Loan} from "../../types/Loan.ts";
+import {getCustomers} from "../../services/customerService.ts";
+import {getLoans} from "../../services/loanService.ts";
 import LoanStatusChart from "../../components/LoanStatusChart";
 import RecentLoans from "../../components/RecentLoans";
 

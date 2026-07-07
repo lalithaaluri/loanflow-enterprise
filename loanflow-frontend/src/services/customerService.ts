@@ -1,5 +1,5 @@
-import type { Customer } from "../types/Customer";
-import { getToken } from "./authService";
+import type {Customer} from "../types/Customer";
+import {getToken} from "./authService";
 
 const API_URL = "http://localhost:8080/api/customers";
 

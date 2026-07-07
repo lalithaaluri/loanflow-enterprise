@@ -1,13 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import type { Loan } from "../../types/Loan";
-import { getRole } from "../../services/authService";
-import {
-    approveLoan,
-    deleteLoan,
-    getLoans,
-    rejectLoan,
-} from "../../services/loanService";
+import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import type {Loan} from "../../types/Loan";
+import {getRole} from "../../services/authService";
+import {approveLoan, deleteLoan, getLoans, rejectLoan,} from "../../services/loanService";
 
 function Loans() {
     const navigate = useNavigate();

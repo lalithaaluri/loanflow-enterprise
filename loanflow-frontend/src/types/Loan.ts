@@ -1,4 +1,4 @@
-import type { Customer } from "./Customer";
+import type {Customer} from "./Customer";
 
 export interface Loan {
     id: number;

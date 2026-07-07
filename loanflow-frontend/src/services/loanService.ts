@@ -1,5 +1,5 @@
-import type { Loan } from "../types/Loan";
-import { getToken } from "./authService";
+import type {Loan} from "../types/Loan";
+import {getToken} from "./authService";
 
 const API_URL = "http://localhost:8080/api/loans";
 

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import type { Customer } from "../../types/Customer";
-import type { Loan } from "../../types/Loan";
-import { getCustomers } from "../../services/customerService";
-import { getLoans, updateLoan } from "../../services/loanService";
+import {useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import type {Customer} from "../../types/Customer";
+import type {Loan} from "../../types/Loan";
+import {getCustomers} from "../../services/customerService";
+import {getLoans, updateLoan} from "../../services/loanService";
 
 function EditLoan() {
     const { id } = useParams();
@@ -18,11 +18,6 @@ function EditLoan() {
         termMonths: "",
         purpose: "",
     });
-
-    useEffect(() => {
-        loadData();
-    }, []);
-
     const loadData = async () => {
         const customersData = await getCustomers();
         setCustomers(customersData);
@@ -41,6 +36,11 @@ function EditLoan() {
             });
         }
     };
+
+    useEffect(() => {
+        loadData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

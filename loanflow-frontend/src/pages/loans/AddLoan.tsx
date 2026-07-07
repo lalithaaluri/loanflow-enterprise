@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import type { Customer } from "../../types/Customer";
-import { getCustomers } from "../../services/customerService";
-import { createLoan } from "../../services/loanService";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import type {Customer} from "../../types/Customer";
+import {getCustomers} from "../../services/customerService";
+import {createLoan} from "../../services/loanService";
 
 function AddLoan() {
     const navigate = useNavigate();

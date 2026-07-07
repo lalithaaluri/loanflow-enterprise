@@ -1,4 +1,4 @@
-import type { Loan } from "../types/Loan";
+import type {Loan} from "../types/Loan";
 
 type Props = {
     loans: Loan[];
