@@ -158,7 +158,7 @@ Before running the application, ensure the following are installed:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/<your-github-username>/loanflow.git
+git clone https://github.com/lalithaaluri/loanflow-enterprise.git
 cd loanflow
 ```
 
