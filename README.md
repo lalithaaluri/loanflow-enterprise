@@ -284,22 +284,30 @@ Protected REST APIs
 
 > Screenshots will be added after the application deployment.
 
-### Login Page
+## 📸 Application Screenshots
 
-![Login](screenshots/login.png)
+### Login Page
+![Login Page](screenshots/login.png)
+
+---
 
 ### Dashboard
-
 ![Dashboard](screenshots/dashboard.png)
 
-### Customer Management
+---
 
-![Customers](screenshots/customers.png)
+### Customer Management
+![Customer Management](screenshots/customers.png)
+
+---
 
 ### Loan Management
+![Loan Management](screenshots/loans.png)
 
-![Loans](screenshots/loans.png)
+---
 
+### Swagger API Documentation
+![Swagger API Documentation](screenshots/swagger.png)
 ## 🚀 Future Enhancements
 
 The following enhancements can be added in future releases:
