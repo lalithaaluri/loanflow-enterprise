@@ -1,7 +1,7 @@
 import type {Loan} from "../types/Loan";
 import {getToken} from "./authService";
 
-const API_URL = "http://localhost:8080/api/loans";
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/loans`;
 
 function getAuthHeaders() {
     const token = getToken();

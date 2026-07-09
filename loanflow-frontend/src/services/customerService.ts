@@ -1,7 +1,7 @@
 import type {Customer} from "../types/Customer";
 import {getToken} from "./authService";
 
-const API_URL = "http://localhost:8080/api/customers";
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/customers`;
 
 function getAuthHeaders() {
     const token = getToken();
