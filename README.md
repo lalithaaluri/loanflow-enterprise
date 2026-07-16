@@ -1,341 +1,409 @@
 # 🏦 LoanFlow Enterprise
 
-A secure, enterprise-style Loan Management System built with **Spring Boot 3**, **React**, **TypeScript**, **JWT Authentication**, and **Role-Based Authorization**.
+A secure, enterprise-style Loan Management System built with **Java
+21**, **Spring Boot 3**, **React**, **TypeScript**, **JWT
+Authentication**, **Spring Security**, and **PostgreSQL**.
 
-LoanFlow Enterprise helps manage customers, process loan applications, approve or reject loan requests, and view business KPIs through a modern SaaS-style dashboard.
+LoanFlow Enterprise is an enterprise-style full-stack application that demonstrates modern software engineering practices including layered architecture, secure authentication, RESTful APIs, containerization, CI/CD, and cloud deployment.
 
-## 📑 Table of Contents
+---
 
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [Project Structure](#project-structure)
-- [Installation Guide](#installation-guide)
-- [API Endpoints](#api-endpoints)
-- [JWT Authentication Flow](#jwt-authentication-flow)
-- [Screenshots](#screenshots)
-- [Future Enhancements](#future-enhancements)
-## 📑 
+## 🌐 Live Demo
 
-## 📖 Project Overview
+-   **Frontend:** https://loanflow-enterprise.vercel.app
+-   **Backend API:** https://loanflow-api-gdf7.onrender.com
+-   **Swagger UI:**
+    https://loanflow-api-gdf7.onrender.com/swagger-ui/index.html
+-   **GitHub:** https://github.com/lalithaaluri/loanflow-enterprise
 
-LoanFlow Enterprise is a modern full-stack Loan Management System developed using Spring Boot and React. The application demonstrates enterprise software development practices including layered architecture, secure JWT authentication, role-based authorization, RESTful APIs, and a responsive SaaS-style user interface.
+> **Note:** The Render backend may take 30--60 seconds to wake up if it
+> has been idle.
 
-The system enables administrators and loan officers to manage customers, process loan applications, approve or reject requests, and monitor business insights through an interactive dashboard.
+---
 
-## ✨ Features
+# 📑 Table of Contents
 
-### Backend
+-   Project Overview
+-   Features
+-   Technology Stack
+-   Architecture
+-   Project Structure
+-   Installation Guide
+-   Docker
+-   API Endpoints
+-   JWT Authentication Flow
+-   Screenshots
+-   Future Enhancements
+-   Author
 
+---
+
+# 📖 Project Overview
+
+LoanFlow Enterprise is a modern full-stack Loan Management System that
+allows administrators and loan officers to manage customers, process
+loan applications, approve or reject loans, and monitor business KPIs
+through a responsive dashboard.
+
+The project was designed to demonstrate enterprise Java Full Stack
+development using Spring Boot, React, JWT authentication, layered
+architecture, JPA/Hibernate, Docker, GitHub Actions, and cloud
+deployment.
+
+---
+## ⭐ Project Highlights
+
+- Enterprise layered architecture
 - Secure JWT Authentication
-- Spring Security
-- Role-Based Authorization (Admin / Loan Officer)
-- Customer Management (CRUD)
-- Loan Management (CRUD)
-- Loan Approval & Rejection Workflow
-- RESTful APIs
-- Global Exception Handling
-- Swagger / OpenAPI Documentation
-- CORS Configuration
+- Role-based authorization
+- Spring Boot REST APIs
+- PostgreSQL with Hibernate/JPA
+- Responsive React + TypeScript frontend
+- Docker & Docker Compose
+- GitHub Actions CI
+- Render backend deployment
+- Vercel frontend deployment
 
-### Frontend
+---
 
-- React + TypeScript
-- Protected Routes
-- Login & Logout
-- Dashboard Overview
-- KPI Cards
-- Loan Status Bar Chart
-- Recent Loan Applications
-- Customer Management
-- Loan Management
-- Search & Filtering
-- Pagination
-- Responsive SaaS-style Interface
-## 💻 Technology Stack
+# ✨ Features
 
-### Backend
+## Backend
 
-| Technology | Purpose |
-|------------|---------|
-| Java 21 | Programming Language |
-| Spring Boot 3 | Backend Framework |
-| Spring Security | Authentication & Authorization |
-| JWT | Secure Authentication |
-| Spring Data JPA | Database Access |
-| Hibernate | ORM Framework |
-| Maven | Dependency Management |
-| PostgreSQL | Database |
-| Swagger/OpenAPI | API Documentation |
+-   Java 21
+-   Spring Boot 3
+-   Spring Security
+-   JWT Authentication
+-   Role-Based Authorization (ADMIN / LOAN_OFFICER)
+-   Customer CRUD
+-   Loan CRUD
+-   Loan Approval & Rejection
+-   REST APIs
+-   Spring Data JPA
+-   Hibernate ORM
+-   PostgreSQL
+-   Global Exception Handling
+-   Swagger / OpenAPI
+-   Demo data initialization
+-   CORS configuration
 
-### Frontend
+## Frontend
 
-| Technology | Purpose |
-|------------|---------|
-| React | Frontend Framework |
-| TypeScript | Type Safety |
-| React Router | Navigation |
-| Axios | API Communication |
-| Recharts | Dashboard Charts |
-| CSS | Enterprise UI Styling |
+-   React + TypeScript + Vite
+-   Protected Routes
+-   Login / Logout
+-   Dashboard
+-   KPI Cards
+-   Loan Status Charts
+-   Recent Loans
+-   Customer Management
+-   Loan Management
+-   Search
+-   Filtering
+-   Pagination
+-   Shared API Configuration
+-   Responsive UI
 
-## 🏗️ Architecture
+## DevOps
+
+-   Docker
+-   Docker Compose
+-   GitHub Actions
+-   Render Deployment
+-   Vercel Deployment
+
+---
+
+# 💻 Technology Stack
+
+## Backend
+
+Technology        Purpose
+  ----------------- ----------------------
+Java 21           Programming Language
+Spring Boot 3     Backend Framework
+Spring Security   Security
+JWT               Authentication
+Spring Data JPA   Persistence
+Hibernate         ORM
+PostgreSQL        Database
+Maven             Build Tool
+Swagger           API Documentation
+
+## Frontend
+
+Technology     Purpose
+  -------------- --------------------
+React          UI
+TypeScript     Type Safety
+Vite           Build Tool
+React Router   Routing
+Fetch API      REST Communication
+Recharts       Charts
+
+## DevOps
+
+Technology       Purpose
+  ---------------- ---------------------
+Docker           Containerization
+Docker Compose   Local orchestration
+GitHub Actions   CI
+Render           Backend Hosting
+Vercel           Frontend Hosting
+
+---
+
+# 🏗️ Architecture
 
 ```text
-                     +----------------------+
-                     |   React Frontend     |
-                     |  (TypeScript + Vite) |
-                     +----------+-----------+
-                                |
-                     HTTP Requests (JWT)
-                                |
-                                v
-                 +--------------+---------------+
-                 |      Spring Boot REST API    |
-                 |      Spring Security         |
-                 |      JWT Authentication      |
-                 +--------------+---------------+
-                                |
-                                v
-                     Service Layer (Business Logic)
-                                |
-                                v
-                      Repository Layer (JPA)
-                                |
-                                v
-                         PostgreSQL Database
+React + TypeScript + Vite
+          │
+          │ HTTPS + JWT
+          ▼
+Spring Security Filter Chain
+          ▼
+REST Controllers
+          ▼
+Service Layer
+          ▼
+Repository Layer
+          ▼
+Hibernate / JPA
+          ▼
+PostgreSQL
 ```
-## 📁 Project Structure
+
+## 🚀 Deployment Architecture
 
 ```text
-loanflow/
-│
-├── src/
-│   ├── main/
-│   │   ├── java/com/lalitha/loanflow/
-│   │   │   ├── config/
-│   │   │   ├── controller/
-│   │   │   ├── dto/
-│   │   │   ├── exception/
-│   │   │   ├── model/
-│   │   │   ├── repository/
-│   │   │   ├── security/
-│   │   │   └── service/
-│   │   │
-│   │   └── resources/
-│   │
-│   └── test/
-│
-├── loanflow-frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── layouts/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── types/
-│   │   └── assets/
-│
-├── pom.xml
-├── package.json
+Developer
+     │
+     ▼
+GitHub Repository
+     │
+     ▼
+GitHub Actions
+     │
+     ├──────────────┐
+     ▼              ▼
+ Render          Vercel
+(Spring Boot)   (React)
+     │
+     ▼
+ PostgreSQL
+```
+---
+
+# 📁 Project Structure
+
+``` text
+loanflow
+├── src/main/java/com/lalitha/loanflow
+│   ├── config
+│   ├── controller
+│   ├── dto
+│   ├── exception
+│   ├── model
+│   ├── repository
+│   ├── security
+│   └── service
+├── loanflow-frontend
+│   └── src
+│       ├── components
+│       ├── config
+│       ├── layouts
+│       ├── pages
+│       ├── services
+│       └── types
+├── Dockerfile
+├── docker-compose.yml
 └── README.md
 ```
-## ⚙️ Installation Guide
-
-### Prerequisites
-
-Before running the application, ensure the following are installed:
-
-- Java 21
-- Maven
-- Node.js (v20 or later)
-- pnpm
-- PostgreSQL
-- Git
 
 ---
+# ⚙️ Installation Guide
 
-### Clone the Repository
+## Backend
 
-```bash
-git clone https://github.com/lalithaaluri/loanflow-enterprise.git
-cd loanflow
-```
-
----
-
-### Backend Setup
-
-Install dependencies and start the Spring Boot application:
-
-```bash
+``` bash
 mvn clean install
 mvn spring-boot:run
 ```
 
-Backend runs at:
+Backend: http://localhost:8080
 
+Swagger: http://localhost:8080/swagger-ui/index.html
+
+## Frontend
+
+Create `.env`
+
+``` env
+VITE_API_BASE_URL=http://localhost:8080
 ```
-http://localhost:8080
-```
 
-Swagger UI:
+Run:
 
-```
-http://localhost:8080/swagger-ui/index.html
-```
-
----
-
-### Frontend Setup
-
-Open a new terminal:
-
-```bash
+``` bash
 cd loanflow-frontend
 pnpm install
 pnpm dev
 ```
 
-Frontend runs at:
+Frontend: http://localhost:5173
 
+---
+
+# 🐳 Docker
+
+Run the complete application using Docker Compose:
+
+```bash
+docker compose up --build
 ```
-http://localhost:5173
+
+This starts:
+
+- PostgreSQL
+- Spring Boot Backend
+- React Frontend
+
+Backend:
+http://localhost:8080
+
+Frontend:
+http://localhost:3000
+
+---
+
+# 🔗 API Endpoints
+
+## Authentication
+
+POST `/api/auth/login`
+
+## Customers
+
+GET, POST `/api/customers`
+
+PUT, DELETE `/api/customers/{id}`
+
+## Loans
+
+GET, POST `/api/loans`
+
+PUT, DELETE `/api/loans/{id}`
+
+PUT `/api/loans/{id}/approve`
+
+PUT `/api/loans/{id}/reject`
+
+---
+
+# 🔐 JWT Authentication Flow
+
+``` text
+Login
+ ↓
+React Login Page
+ ↓
+POST /api/auth/login
+ ↓
+Spring Boot Authentication
+ ↓
+JWT Generated
+ ↓
+Stored in localStorage
+ ↓
+Authorization: Bearer <JWT>
+ ↓
+JWT Filter
+ ↓
+Controller
+ ↓
+Service
+ ↓
+Repository
+ ↓
+PostgreSQL
 ```
 
-## 🔗 API Endpoints
+---
 
-### Authentication
+## 🔑 Demo Credentials
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/login` | Authenticate user and return JWT |
+| Role | Username | Password |
+|------|----------|----------|
+| Administrator | admin | admin123 |
+
+---
+# 📸 Screenshots
+
+## 📸 Application Screenshots
+
+### Login
+
+![Login](screenshots/login.png)
+
+---
+
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
 
 ---
 
 ### Customers
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/customers` | Get all customers |
-| GET | `/api/customers/{id}` | Get customer by ID |
-| POST | `/api/customers` | Create customer |
-| PUT | `/api/customers/{id}` | Update customer |
-| DELETE | `/api/customers/{id}` | Delete customer |
+![Customers](screenshots/customers.png)
 
 ---
 
 ### Loans
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/loans` | Get all loans |
-| GET | `/api/loans/{id}` | Get loan by ID |
-| POST | `/api/loans` | Create loan |
-| PUT | `/api/loans/{id}` | Update loan |
-| DELETE | `/api/loans/{id}` | Delete loan |
-| PUT | `/api/loans/{id}/approve` | Approve loan |
-| PUT | `/api/loans/{id}/reject` | Reject loan |
-
-## 🔐 JWT Authentication Flow
-
-```text
-User
- │
- │ Login
- ▼
-React Frontend
- │
- │ POST /api/auth/login
- ▼
-Spring Boot
- │
- │ Validate Username & Password
- ▼
-Spring Security
- │
- │ Generate JWT
- ▼
-React stores JWT in localStorage
- │
- │
- │ Every API Request
- │ Authorization: Bearer <JWT>
- ▼
-Spring Security Filter
- │
- │ Validate JWT
- ▼
-Protected REST APIs
-```
-
-### Authentication Process
-
-1. User enters username and password on the login page.
-2. Spring Security authenticates the credentials.
-3. A JWT token is generated and returned to the frontend.
-4. The frontend stores the JWT token in `localStorage`.
-5. Axios automatically attaches the JWT token to all protected API requests.
-6. Spring Security validates the JWT before allowing access to secured endpoints.
-7. Role-based authorization determines whether the user can perform Admin or Loan Officer operations.
-8. Logging out removes the JWT token from `localStorage`.
-
-## 📸 Screenshots
-
-> Screenshots will be added after the application deployment.
-
-## 📸 Application Screenshots
-
-### Login Page
-![Login Page](screenshots/login.png)
+![Loans](screenshots/loans.png)
 
 ---
 
-### Dashboard
-![Dashboard](screenshots/dashboard.png)
+### Swagger
+
+![Swagger](screenshots/swagger.png)
 
 ---
 
-### Customer Management
-![Customer Management](screenshots/customers.png)
+# 🚀 Future Enhancements
+
+- Unit and Integration Testing (JUnit & Mockito)
+- Refresh Token Authentication
+- Audit Logging
+- Email Notifications
+- CSV/PDF Export
+- Advanced Dashboard Analytics
+- AWS / Azure Deployment
 
 ---
 
-### Loan Management
-![Loan Management](screenshots/loans.png)
-
----
-
-### Swagger API Documentation
-![Swagger API Documentation](screenshots/swagger.png)
-## 🚀 Future Enhancements
-
-The following enhancements can be added in future releases:
-
-- Docker containerization
-- GitHub Actions CI/CD pipeline
-- Backend pagination using Spring Pageable
-- Advanced dashboard analytics
-- Email notifications
-- Audit logging
-- CSV / PDF export
-- Unit & Integration testing
-- Cloud deployment (AWS / Azure / Render)
-
-## 👨‍💻 Author
+# 👨‍💻 Author
 
 **Lalitha Kumari**
 
-Full Stack Developer
+Java Full Stack Developer
 
-- Java
-- Spring Boot
-- React
-- TypeScript
-- PostgreSQL
-- JWT Authentication
-- REST APIs
+Technologies:
 
-## 📄 License
+-   Java
+-   Spring Boot
+-   Spring Security
+-   React
+-   TypeScript
+-   PostgreSQL
+-   Docker
+-   JWT
+-   REST APIs
 
-This project is developed for learning, portfolio demonstration, and professional showcase purposes.
+---
+
+# 📄 License
+
+This project is intended for learning, portfolio demonstration, and
+professional showcase purposes.
