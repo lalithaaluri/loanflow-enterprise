@@ -1,4 +1,4 @@
-const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/auth`;
+import { API_ENDPOINTS } from "../config/api";
 
 export type LoginResponse = {
     token: string;
@@ -9,7 +9,7 @@ export async function login(
     username: string,
     password: string
 ): Promise<LoginResponse> {
-    const response = await fetch(`${API_BASE_URL}/login`, {
+    const response = await fetch(`${API_ENDPOINTS.auth}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -24,24 +24,24 @@ export async function login(
     return response.json();
 }
 
-export function saveAuth(token: string, role: string) {
+export function saveAuth(token: string, role: string): void {
     localStorage.setItem("token", token);
     localStorage.setItem("role", role);
 }
 
-export function getToken() {
+export function getToken(): string | null {
     return localStorage.getItem("token");
 }
 
-export function getRole() {
+export function getRole(): string | null {
     return localStorage.getItem("role");
 }
 
-export function logout() {
+export function logout(): void {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
 }
 
-export function isAuthenticated() {
-    return !!getToken();
+export function isAuthenticated(): boolean {
+    return Boolean(getToken());
 }

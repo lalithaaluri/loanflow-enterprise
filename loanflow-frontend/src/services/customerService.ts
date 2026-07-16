@@ -1,9 +1,8 @@
-import type {Customer} from "../types/Customer";
-import {getToken} from "./authService";
+import { API_ENDPOINTS } from "../config/api";
+import type { Customer } from "../types/Customer";
+import { getToken } from "./authService";
 
-const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/customers`;
-
-function getAuthHeaders() {
+function getAuthHeaders(): HeadersInit {
     const token = getToken();
 
     return {
@@ -12,7 +11,7 @@ function getAuthHeaders() {
 }
 
 export async function getCustomers(): Promise<Customer[]> {
-    const response = await fetch(API_URL, {
+    const response = await fetch(API_ENDPOINTS.customers, {
         headers: getAuthHeaders(),
     });
 
@@ -21,11 +20,14 @@ export async function getCustomers(): Promise<Customer[]> {
     }
 
     const data = await response.json();
+
     return Array.isArray(data) ? data : data.content || [];
 }
 
-export async function createCustomer(customer: Omit<Customer, "id">) {
-    const response = await fetch(API_URL, {
+export async function createCustomer(
+    customer: Omit<Customer, "id">
+): Promise<Customer> {
+    const response = await fetch(API_ENDPOINTS.customers, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -41,15 +43,20 @@ export async function createCustomer(customer: Omit<Customer, "id">) {
     return response.json();
 }
 
-export async function updateCustomer(customer: Customer) {
-    const response = await fetch(`${API_URL}/${customer.id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            ...getAuthHeaders(),
-        },
-        body: JSON.stringify(customer),
-    });
+export async function updateCustomer(
+    customer: Customer
+): Promise<Customer> {
+    const response = await fetch(
+        `${API_ENDPOINTS.customers}/${customer.id}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                ...getAuthHeaders(),
+            },
+            body: JSON.stringify(customer),
+        }
+    );
 
     if (!response.ok) {
         throw new Error("Failed to update customer");
@@ -58,11 +65,14 @@ export async function updateCustomer(customer: Customer) {
     return response.json();
 }
 
-export async function deleteCustomer(id: number) {
-    const response = await fetch(`${API_URL}/${id}`, {
-        method: "DELETE",
-        headers: getAuthHeaders(),
-    });
+export async function deleteCustomer(id: number): Promise<void> {
+    const response = await fetch(
+        `${API_ENDPOINTS.customers}/${id}`,
+        {
+            method: "DELETE",
+            headers: getAuthHeaders(),
+        }
+    );
 
     if (!response.ok) {
         throw new Error("Failed to delete customer");
